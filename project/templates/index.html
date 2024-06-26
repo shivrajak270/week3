@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Language Translator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Voice Language Translator</h1>
+
+    <div>
+        <label for="target_language">Select Target Language:</label>
+        <select id="target_language">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="es">Spanish</option>
+            <!-- Add other language options as needed -->
+        </select>
+    </div>
+
+    <button onclick="startTranslation()">Start Translation</button>
+
+    <div id="translated_text"></div>
+
+    <script>
+        function startTranslation() {
+            var targetLanguage = document.getElementById('target_language').value;
+            $.ajax({
+                url: '/translate',
+                type: 'POST',
+                data: {target_language: targetLanguage},  // Ensure target_language is correctly passed
+                success: function(response) {
+                    document.getElementById('translated_text').innerHTML = response.translated_text;
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
